@@ -1,5 +1,8 @@
+const Layout = () => import("@/layout/index.vue");
 export default {
   path: "/manage",
+  name: "Manage",
+  component: Layout,
   redirect: "/manage/interfaceManage",
   meta: {
     icon: "lollipop",
@@ -10,10 +13,18 @@ export default {
   children: [
     {
       path: "/manage/interfaceManage",
-      name: "interfaceManage",
+      name: "InterfaceManage",
       component: () => import("@/views/manage/interfaceManage.vue"),
       meta: {
         title: "接口管理"
+      }
+    },
+    {
+      path: "/manage/interfaceAdd",
+      name: "InterfaceAdd",
+      component: () => import("@/views/manage/interfaceAdd.vue"),
+      meta: {
+        title: "新增接口"
       }
     },
     {

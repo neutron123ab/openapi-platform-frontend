@@ -12,6 +12,7 @@ export type UserResult = {
     createTime: string;
     /** 用户角色（0-普通用户，1-管理员） */
     userRole: number;
+    accessKey: string;
   };
   message: string;
   description: string;
@@ -38,7 +39,7 @@ export type RefreshTokenResult = {
 
 /** 登录 */
 export const getLogin = (data?: object) => {
-  return http.request<UserResult>("post", "/api/user/login", { data });
+  return http.request<UserResult>("post", "/api/backend/user/login", { data });
 };
 
 /** 刷新token */
@@ -50,5 +51,7 @@ export const refreshTokenApi = (data?: object) => {
  * 注册
  */
 export const getRegister = (data?: object) => {
-  return http.request<RegisterResult>("post", "/api/user/register", { data });
+  return http.request<RegisterResult>("post", "/api/backend/user/register", {
+    data
+  });
 };

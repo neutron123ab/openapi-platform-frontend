@@ -20,6 +20,7 @@ import { setToken } from "@/utils/auth";
 import { addPathMatch } from "@/router/utils";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import { getRegister } from "@/api/user";
+import {useUserInfoStore} from "@/store/modules/userInfo";
 
 defineOptions({
   name: "Login"
@@ -71,6 +72,9 @@ const onLogin = async (formEl: FormInstance | undefined) => {
         })
         .then(res => {
           if (res.code === 0) {
+            const userInfoStore = useUserInfoStore();
+            userInfoStore.setUserInfo(res.data);
+
             router.push("/");
             message("登录成功", { type: "success" });
           }

@@ -16,7 +16,7 @@ export const useUserStore = defineStore({
     username:
       storageSession().getItem<DataInfo<number>>(sessionKey)?.username ?? "",
     // 页面级别权限
-    roles: storageSession().getItem<DataInfo<number>>(sessionKey)?.roles ?? []
+    roles: storageSession().getItem<DataInfo<number>>(sessionKey)?.roles ?? [],
   }),
   actions: {
     /** 存储用户名 */
