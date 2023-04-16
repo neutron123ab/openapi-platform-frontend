@@ -130,7 +130,7 @@
             <JsonEditorVue v-model="value" />
           </el-descriptions-item>
           <el-descriptions-item>
-            <el-button type="primary">调用</el-button>
+            <el-button type="primary" @click="onInvoke">调用</el-button>
           </el-descriptions-item>
         </el-descriptions>
       </div>
@@ -151,7 +151,17 @@ import {
 } from "@element-plus/icons-vue";
 import JsonEditorVue from "json-editor-vue";
 import { useRoute } from "vue-router";
-const value = ref();
+import {invokeInterface} from "@/api/invoke";
+
+const onInvoke = async () => {
+  const data = JSON.stringify(value.value);
+  await invokeInterface({
+    interfaceId: info.value.id,
+    requestParams: data
+  }).then(resp => {
+    console.log(resp.data);
+  });
+};
 
 const size = ref("");
 const iconStyle = computed(() => {
@@ -171,8 +181,11 @@ const route = useRoute();
 const requestData = ref([]);
 const responseData = ref([]);
 
+const value = ref({});
+
 onBeforeMount(() => {
   info.value = JSON.parse(route.query.data);
+  console.log(info.value)
   if (info.value.status === "1") {
     info.value.status = "开放";
   } else if (info.value.status === "0") {
@@ -180,6 +193,9 @@ onBeforeMount(() => {
   }
   requestData.value = info.value.paramsList;
   responseData.value = info.value.responseParamsList;
+  for (let i = 0; i < requestData.value.length; i++) {
+    value.value[requestData.value[i].name] = "";
+  }
 });
 
 const onClickBack = () => {
